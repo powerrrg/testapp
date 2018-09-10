@@ -15,7 +15,7 @@ class Auth extends Component {
         }
     }
     login(){
-        let username = 'Roma';
+        let username = 'AgileEngine';
         let password = 'number1';
         if(this.state.username=='' || this.state.password==''){
             this.setState({error: 'Fields Username and Password cannot be empty'});
