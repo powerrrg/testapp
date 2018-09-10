@@ -26,7 +26,6 @@ class Home extends Component {
         );
     }
 }
-
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
@@ -43,11 +42,10 @@ mapStateToProps = state =>  {
     return {
         user: state.auth
     };
-}
-
+};
 mapDispatchToProps = dispatch => {
     return bindActionCreators({
         login
     }, dispatch);
-}
+};
 export default connect( mapStateToProps, mapDispatchToProps ) (Home);

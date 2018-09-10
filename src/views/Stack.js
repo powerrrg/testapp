@@ -1,37 +1,31 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import HeaderPanel from './../components/HeaderPanel';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {getQuestionsList} from './../actions/StackActions';
 
-export default class Stack extends Component {
+class Stack extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            list: []
+        }
+    }
+    componentWillMount(){
+        this.props.getQuestionsList();
+    }
+    componentWillReceiveProps(nexrProps){
+        if(this.props.questionsList!=nexrProps.questionsList){
+            this.setState({list:nexrProps.questionsList});
+        }
     }
     render() {
-        const menu = [
-            {key: '1', title: 'What is the difference between React Native and React?'},
-            {key: '2', title: 'Hide keyboard in react-native'},
-            {key: '3', title: 'How to do logging in React Native?'},
-            {key: '4', title: 'What is the difference between React Native and React?'},
-            {key: '5', title: 'Hide keyboard in react-native'},
-            {key: '6', title: 'How to do logging in React Native?'},
-            {key: '7', title: 'What is the difference between React Native and React?'},
-            {key: '8', title: 'Hide keyboard in react-native'},
-            {key: '9', title: 'How to do logging in React Native?'},
-            {key: '10', title: 'What is the difference between React Native and React?'},
-            {key: '11', title: 'Hide keyboard in react-native'},
-            {key: '12', title: 'How to do logging in React Native?'},
-            {key: '13', title: 'What is the difference between React Native and React?'},
-            {key: '14', title: 'Hide keyboard in react-native'},
-            {key: '15', title: 'How to do logging in React Native?'},
-            {key: '16', title: 'What is the difference between React Native and React?'},
-            {key: '17', title: 'Hide keyboard in react-native'},
-            {key: '18', title: 'How to do logging in React Native?'}
-        ];
         return (
             <View style={styles.container}>
                 <HeaderPanel title={"Stack Overflow"} menuAction={() => (this.props.navigation.push('Menu'))} />
                 <FlatList
-                    data={menu}
+                    data={this.state.list}
                     renderItem={({item}) =>
                         <View
                             key={item.key}
@@ -67,3 +61,16 @@ const styles = StyleSheet.create({
         fontSize: 20
     }
 });
+
+mapStateToProps = state =>  {
+    console.log(state);
+    return {
+        questionsList: state.stack.questionsList
+    };
+};
+mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        getQuestionsList
+    }, dispatch);
+};
+export default connect( mapStateToProps, mapDispatchToProps ) (Stack);
