@@ -6,7 +6,7 @@ class HeaderPanel extends Component {
     render() {
         return (
             <View style={styles.topBarContainer}>
-                <TouchableOpacity style = {styles.tbMenuButton} onPress = {() => {alert(222)}}>
+                <TouchableOpacity style = {styles.tbMenuButton} onPress = { () => {this.props.menuAction()}}>
                     <Image
                         style={styles.tbMenuButtonImage}
                         resizeMode={'contain'}

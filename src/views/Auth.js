@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
 
 export default class Auth extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            isSignUp: true,
             username: '',
-            email: '',
             password: '',
             error: null
         }
@@ -40,13 +38,14 @@ export default class Auth extends Component {
                         style={styles.txInput}
                         placeholder="Password"
                         placeholderTextColor='#21364E'
-                        value={this.state.username}
-                        onChangeText={(text) => { this.setState({ username: text}) }}
+                        secureTextEntry={true}
+                        value={this.state.password}
+                        onChangeText={(text) => {this.setState({ password: text})}}
                         underlineColorAndroid="transparent"/>
                 </View>
 
                 <View style={styles.cFormItem}>
-                    <TouchableOpacity style = {styles.submitBtn} onPress = { () => {alert(111)}}>
+                    <TouchableOpacity style = {styles.submitBtn} onPress = { () => {this.props.navigation.navigate("Home")}}>
                         <Text style={styles.submitBtnText}>Log In</Text>
                     </TouchableOpacity>
                 </View>

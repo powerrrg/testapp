@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import HeaderPanel from './../components/HeaderPanel';
 
 export default class Home extends Component {
@@ -12,7 +12,7 @@ export default class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <HeaderPanel title={"Home"} />
+                <HeaderPanel title={"Home"} menuAction={() => (this.props.navigation.navigate('Menu'))} />
                 <Text style={styles.title1}>Hello, {this.state.username}!</Text>
             </View>
         );
