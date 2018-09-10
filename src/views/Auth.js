@@ -1,15 +1,41 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {login} from './../actions/AuthActions';
 
-export default class Auth extends Component {
+class Auth extends Component {
     constructor(props){
         super(props);
 
         this.state = {
             username: '',
             password: '',
-            error: null
+            error: ''
         }
+    }
+    login(){
+        let username = 'Roma';
+        let password = 'number1';
+        if(this.state.username=='' || this.state.password==''){
+            this.setState({error: 'Fields Username and Password cannot be empty'});
+        } else if(this.state.username!=username || this.state.password!=password) {
+            this.setState({error: 'Login failed wrong user credentials'});
+        } else {
+            this.setState({error: ''});
+            this.props.login({userName: this.state.username});
+            this.setState({username: '', password: ''});
+            this.props.navigation.navigate("Home");
+        }
+    }
+    showValidationErrors(){
+        if(this.state.error){
+            return (
+                <View style={styles.cValidErrors}>
+                    <Text style={styles.validErrorsText}>{this.state.error}</Text>
+                </View>
+            )
+        } else return null;
     }
     render() {
         return (
@@ -25,7 +51,7 @@ export default class Auth extends Component {
                         placeholder="Username"
                         placeholderTextColor='#21364E'
                         value={this.state.username}
-                        onChangeText={(text) => { this.setState({ username: text}) }}
+                        onChangeText={(text) => {this.setState({username: text})}}
                         underlineColorAndroid="transparent"/>
                 </View>
 
@@ -43,9 +69,9 @@ export default class Auth extends Component {
                         onChangeText={(text) => {this.setState({ password: text})}}
                         underlineColorAndroid="transparent"/>
                 </View>
-
+                {this.showValidationErrors()}
                 <View style={styles.cFormItem}>
-                    <TouchableOpacity style = {styles.submitBtn} onPress = { () => {this.props.navigation.navigate("Home")}}>
+                    <TouchableOpacity style = {styles.submitBtn} onPress = {()=>{this.login()}}>
                         <Text style={styles.submitBtnText}>Log In</Text>
                     </TouchableOpacity>
                 </View>
@@ -99,5 +125,24 @@ const styles = StyleSheet.create({
     submitBtnText: {
         color: '#fff',
         fontSize: 24
+    },
+    cValidErrors: {
+        marginTop: 10
+    },
+    validErrorsText: {
+        color: '#ff0000'
     }
 });
+
+mapStateToProps = state =>  {
+    return {
+        user: state.auth.login
+    };
+}
+
+mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        login
+    }, dispatch);
+}
+export default connect( mapStateToProps, mapDispatchToProps ) (Auth);

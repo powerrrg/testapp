@@ -6,14 +6,14 @@ class HeaderPanel extends Component {
     render() {
         return (
             <View style={styles.topBarContainer}>
-                <TouchableOpacity style = {styles.tbMenuButton} onPress = { () => {this.props.menuAction()}}>
+                <TouchableOpacity style = {styles.tbMenuButton} onPress = {()=>{this.props.menuAction()}}>
                     <Image
                         style={styles.tbMenuButtonImage}
                         resizeMode={'contain'}
-                        source = { require('../images/icMenu.png') }
+                        source = {require('../images/icMenu.png')}
                     />
                 </TouchableOpacity>
-                <Text style={styles.tbCenterText}> {this.props.title} </Text>
+                <Text style={styles.tbCenterText}>{this.props.title}</Text>
             </View>
         );
     }
@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
     },
     tbCenterText: {
         textAlign: 'center',
-        fontSize: 32,
+        fontSize: 28,
         letterSpacing: 1,
         fontWeight: 'bold',
-        paddingTop: 6,
+        paddingTop: 8,
         color: '#fff',
         backgroundColor: 'rgba(0,0,0,0)'
     },
